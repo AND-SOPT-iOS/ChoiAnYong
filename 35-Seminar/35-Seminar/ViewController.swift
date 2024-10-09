@@ -9,9 +9,17 @@ import UIKit
 import SwiftUI
 
 class ViewController: UIViewController {
+    private let imageView: UIImageView = {
+        guard let image = UIImage(named: "Netflix") else { return UIImageView() }
+        let imageView = UIImageView(image: image)
+        imageView.layer.cornerRadius = 25
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         return label
     }()
     
@@ -35,9 +43,11 @@ class ViewController: UIViewController {
     
     private lazy var nextButton: UIButton = {
         let button = UIButton()
-        button.setTitle("다음", for: .normal)
+        button.setTitle("열기", for: .normal)
+        button.layer.cornerRadius = 17
         button.backgroundColor = .tintColor
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -66,29 +76,49 @@ class ViewController: UIViewController {
     }
     
     private func setUI() {
-        [
-            titleLabel,
-            titleTextField,
-            contentTextView,
-            nextButton,
-            pushModeToggleButton
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview($0)
-        }
+        view.addSubViews(imageView,
+                         titleLabel,
+                         titleTextField,
+                         contentTextView,
+                         nextButton,
+                         pushModeToggleButton)
     }
     
     private func setLayout() {
         NSLayoutConstraint.activate(
             [
+                imageView.topAnchor.constraint(
+                    equalTo: view.safeAreaLayoutGuide.topAnchor,
+                    constant: 20
+                ),
+                imageView.leadingAnchor.constraint(
+                    equalTo: view.leadingAnchor,
+                    constant: 20
+                ),
+                imageView.heightAnchor.constraint(equalToConstant: 100),
+                imageView.widthAnchor.constraint(equalToConstant: 100),
+                
                 titleLabel.topAnchor.constraint(
                     equalTo: view.safeAreaLayoutGuide.topAnchor,
                     constant: 20
                 ),
-                titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                titleLabel.leadingAnchor.constraint(
+                    equalTo: imageView.trailingAnchor,
+                    constant: 15
+                ),
+                
+                nextButton.bottomAnchor.constraint(
+                    equalTo: imageView.bottomAnchor
+                ),
+                nextButton.leadingAnchor.constraint(
+                    equalTo: imageView.trailingAnchor,
+                    constant: 15
+                ),
+                nextButton.heightAnchor.constraint(equalToConstant: 35),
+                nextButton.widthAnchor.constraint(equalToConstant: 80),
                 
                 titleTextField.topAnchor.constraint(
-                    equalTo: titleLabel.bottomAnchor,
+                    equalTo: imageView.bottomAnchor,
                     constant: 20
                 ),
                 titleTextField.leadingAnchor.constraint(
@@ -116,17 +146,9 @@ class ViewController: UIViewController {
                 contentTextView.heightAnchor.constraint(
                     equalToConstant: 200
                 ),
-                
-                nextButton.topAnchor.constraint(
-                    equalTo: contentTextView.bottomAnchor,
-                    constant: 20
-                ),
-                nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                nextButton.heightAnchor.constraint(equalToConstant: 44),
-                nextButton.widthAnchor.constraint(equalToConstant: 300),
-                
+                                                
                 pushModeToggleButton.topAnchor.constraint(
-                    equalTo: nextButton.bottomAnchor,
+                    equalTo: contentTextView.bottomAnchor,
                     constant: 20
                 ),
                 pushModeToggleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -149,10 +171,9 @@ class ViewController: UIViewController {
         guard let title = titleTextField.text,
               let content = contentTextView.text
         else {
-            // 텍스트의 값들이 없으면 함수가 return
             return
         }
-        // 존재할 경우 함수를 그대로 실행
+        
         nextViewController.dataBind(
             title: title,
             content: content
