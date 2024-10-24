@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     private let contentView = UIView()
     
     private let appHearderView = AppHeaderView()
+    private let appInfoView = AppInfoView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +46,10 @@ class ViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubViews(contentView)
         
-        contentView.addSubViews(appHearderView)
+        contentView.addSubViews(appHearderView, appInfoView)
     }
     
     private func setLayout() {
-        
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.left.right.bottom.equalToSuperview()
@@ -65,7 +65,11 @@ class ViewController: UIViewController {
             $0.top.equalTo(contentView.snp.top).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
-
+        
+        appInfoView.snp.makeConstraints {
+            $0.top.equalTo(appHearderView.snp.bottom).offset(20)
+            $0.left.right.equalToSuperview().inset(20)
+        }
     }
 }
 
