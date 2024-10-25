@@ -9,7 +9,7 @@ import UIKit
 
 class ReviewView: UIView {
     private let titleLabel = UILabel()
-    private let seemoreButton = UIButton(type: .system)
+    let seeAllReviewButton = UIButton(type: .system)
     private let reviewAvgLabel = UILabel()
     private let ratingLabel = UILabel()
     private let ratingTextLabel = UILabel()
@@ -44,7 +44,7 @@ class ReviewView: UIView {
             $0.font = .systemFont(ofSize: 20, weight: .bold)
         }
         
-        seemoreButton.do {
+        seeAllReviewButton.do {
             $0.setTitle("모두 보기", for: .normal)
             $0.setTitleColor(.systemBlue, for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
@@ -124,7 +124,7 @@ class ReviewView: UIView {
     
     private func setUI() {
         self.addSubViews(titleLabel,
-                         seemoreButton,
+                         seeAllReviewButton,
                          reviewAvgLabel,
                          ratingLabel,
                          ratingTextLabel,
@@ -139,7 +139,7 @@ class ReviewView: UIView {
             $0.left.top.equalToSuperview()
         }
         
-        seemoreButton.snp.makeConstraints {
+        seeAllReviewButton.snp.makeConstraints {
             $0.top.right.equalToSuperview()
             
         }
