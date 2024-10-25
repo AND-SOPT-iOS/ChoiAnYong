@@ -176,43 +176,6 @@ class AppInfoView: UIView {
             $0.left.top.right.bottom.equalToSuperview()
         }
         
-        
-//        firstVStackView.snp.makeConstraints {
-//            $0.top.bottom.equalToSuperview().inset(0.3)
-//        }
-//        
-//        reviewCountLabel.snp.makeConstraints {
-//            $0.top.equalTo(hStackView.snp.top).offset(10)
-//        }
-//        
-//        ratingLabel.snp.makeConstraints {
-//            $0.bottom.equalTo(hStackView.snp.bottom).offset(-10)
-//        }
-//        
-//        secondVStackView.snp.makeConstraints {
-//            $0.top.bottom.equalToSuperview().inset(0.3)
-//        }
-//        
-//        prizeTitleLabel.snp.makeConstraints {
-//            $0.top.equalTo(hStackView.snp.top).offset(10)
-//        }
-//        
-//        prizeSubtitleLabel.snp.makeConstraints {
-//            $0.bottom.equalTo(hStackView.snp.bottom).offset(-10)
-//        }
-//  
-//        thirdVStackView.snp.makeConstraints {
-//            $0.top.bottom.equalToSuperview().inset(0.3)
-//        }
-//        
-//        ageTitleLabel.snp.makeConstraints {
-//            $0.top.equalTo(hStackView.snp.top).offset(10)
-//        }
-//        
-//        ageUnitLabel.snp.makeConstraints {
-//            $0.bottom.equalTo(hStackView.snp.bottom).offset(-10)
-//        }
-        
         firstSeperateView.snp.makeConstraints {
             $0.width.equalTo(0.3)
             $0.height.equalTo(40)
