@@ -9,16 +9,16 @@ import UIKit
 
 class FinanceViewController: BaseViewController {
     private let button = UIButton(type: .system)
+    private let navigationTitleLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigationBar()
     }
     
     @objc func handleButton() {
         let vc = ChartViewController()
         navigationController?.pushViewController(vc, animated: true)
-        navigationItem.title = "금융"
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func setStyle() {
@@ -26,10 +26,16 @@ class FinanceViewController: BaseViewController {
             $0.setTitle("인기 차트", for: .normal)
             $0.addTarget(self, action: #selector(handleButton), for: .touchUpInside)
         }
+        
+        navigationTitleLabel.do {
+            $0.text = "금융"
+            
+        }
     }
     
     override func setUI() {
         view.addSubview(button)
+        
     }
     
     override func setLayout() {
@@ -39,8 +45,13 @@ class FinanceViewController: BaseViewController {
             $0.size.equalTo(100)
         }
     }
+    
+    private func setNavigationBar() {
+        self.navigationItem.titleView = navigationTitleLabel
+        self.navigationItem.backButtonTitle = "금융"
+    }
 }
 
-#Preview {
+#Preview {    
     FinanceViewController()
 }
