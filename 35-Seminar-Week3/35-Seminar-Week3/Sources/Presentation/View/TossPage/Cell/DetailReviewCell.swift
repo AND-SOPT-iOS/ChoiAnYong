@@ -24,14 +24,24 @@ class DetailReviewCell: BaseCollectionViewCell {
         super.init(frame: frame)
         
         backgroundColor = .systemBackground
-        
-        configure(review: .reviews[1])
+        updateBackgroundColor()        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateBackgroundColor()
+        }
+    }
+    
+    private func updateBackgroundColor() {
+        reviewView.backgroundColor = traitCollection.userInterfaceStyle == .dark ?
+        UIColor.systemGray6 : UIColor.systemBackground
+    }
+    
     override func setStyle() {
         reviewTitleLabel.do {
             $0.font = .systemFont(ofSize: 15, weight: .bold)
