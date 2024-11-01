@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HeaderType: String {
+enum FinanceHeaderType: String {
     case required
     case charged
     case free
