@@ -7,11 +7,8 @@
 
 import UIKit
 
-import SnapKit
-import Then
-
 class PopularChartCell: BaseTableViewCell {
-    static let identifier: String = "ChartCell"
+    static let identifier: String = "PopularChartCell"
     
     private let titleLael = UILabel()
     private let subTitleLabel = UILabel()
@@ -19,20 +16,17 @@ class PopularChartCell: BaseTableViewCell {
     private let iconImageView = UIImageView()
     private let rankingLabel = UILabel()
     private let downloadButton = UIButton(type: .system)
-    private let navigationItem = UINavigationItem()
+    private let separatorView = UIView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .systemBackground
-        setStyle()
-        setUI()
-        setLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     override func setStyle() {
         iconImageView.do {
             $0.layer.cornerRadius = 15
@@ -42,7 +36,7 @@ class PopularChartCell: BaseTableViewCell {
         }
         
         rankingLabel.do {
-            $0.font = .systemFont(ofSize: 17, weight: .semibold)
+            $0.font = .systemFont(ofSize: 17, weight: .medium)
         }
         
         titleLael.do {
@@ -52,7 +46,7 @@ class PopularChartCell: BaseTableViewCell {
 
         subTitleLabel.do {
             $0.numberOfLines = 2
-            $0.font = .systemFont(ofSize: 13, weight: .light)
+            $0.font = .systemFont(ofSize: 13, weight: .regular)
             $0.textColor = .systemGray
         }
         
@@ -70,23 +64,27 @@ class PopularChartCell: BaseTableViewCell {
             $0.configuration = configuration
         }
         
-        navigationItem.do {
-            $0.title = "인기 차트"
+        separatorView.do {
+            $0.backgroundColor = .systemGray3
         }
     }
     
     override func setUI() {
-        contentView.addsubViews(iconImageView,
-                    rankingLabel,
-                    verticalStackView,
-                    downloadButton)
+        contentView.addsubViews(
+            iconImageView,
+            rankingLabel,
+            verticalStackView,
+            downloadButton,
+            separatorView
+        )
         
-        verticalStackView.addArrangedSubviews(titleLael,
-                                              subTitleLabel)
+        verticalStackView.addArrangedSubviews(
+            titleLael,
+            subTitleLabel
+        )
     }
     
-    override func setLayout() {
-        
+    override func setLayout() {        
         iconImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
@@ -111,16 +109,34 @@ class PopularChartCell: BaseTableViewCell {
             $0.width.greaterThanOrEqualTo(68)
             $0.height.equalTo(30)
         }
+        
+        separatorView.snp.makeConstraints {
+            $0.height.equalTo(0.3)
+            $0.leading.equalTo(rankingLabel.snp.leading)
+            $0.trailing.equalTo(downloadButton.snp.trailing)
+            $0.bottom.equalToSuperview()
+        }
+    }
+    
+    override func prepareForReuse() {
+        downloadButton.configuration = nil
     }
     
     func configure(app: AppInfo) {
         titleLael.text = app.title
         subTitleLabel.text = app.subtitle
         iconImageView.image = app.iconImage
-        rankingLabel.text = "\(app.ranking)"
-        var attributedTitle = AttributedString("\(app.downloadState.rawValue)")
-        attributedTitle.font = .systemFont(ofSize: 16, weight: .bold)
-        downloadButton.configuration?.attributedTitle = attributedTitle
+        rankingLabel.text = "\(app.ranking!)"
+        if case .reDownload = app.downloadState {
+            downloadButton.configuration = .plain()
+            downloadButton.configuration?.image = app.downloadState.image
+        } else {
+            downloadButton.configuration = .gray()
+            downloadButton.configuration?.cornerStyle = .capsule
+            var attributedTitle = AttributedString("\(app.downloadState.title!)")
+            attributedTitle.font = .systemFont(ofSize: 16, weight: .bold)
+            downloadButton.configuration?.attributedTitle = attributedTitle
+        }
     }
 }
 
