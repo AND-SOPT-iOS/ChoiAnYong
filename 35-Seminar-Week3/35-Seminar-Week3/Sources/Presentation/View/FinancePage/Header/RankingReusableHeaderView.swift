@@ -83,8 +83,10 @@ class RankingReusableHeaderView: UICollectionReusableView {
         delegate?.didTapHeader()
     }
     
-    func configure(title: String) {
-        titleLabel.text = title        
+    func configure(title: String, isArrowBtn: Bool) {
+        titleLabel.text = title
+        if !isArrowBtn { arrowImageView.isHidden = true }
+        else { arrowImageView.isHidden = false }
     }
 }
 
