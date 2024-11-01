@@ -7,46 +7,56 @@
 
 import UIKit
 
-import SnapKit
-import Then
-
-class ChartViewController: UIViewController {
-    
+class ChartViewController: BaseViewController {
+    private let navigationTitleLabel = UILabel()
     private let tableView = UITableView()
-    
-    private let appList = AppInfo.sampleApps
+    private let appList = AppInfo.freeApps
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setStyle()
-        setUI()
-        setLayout()
+        setNavigationBar()
     }
     
-    private func setStyle() {
+    override func setStyle() {
         view.addSubview(tableView)
     }
     
-    private func setUI() {
-        tableView.do {            
+    override func setUI() {
+        navigationTitleLabel.do {
+            $0.text = "인기 차트"
+            $0.font = .systemFont(ofSize: 17, weight: .semibold)
+        }
+        
+        tableView.do {
             $0.register(PopularChartCell.self, forCellReuseIdentifier: PopularChartCell.identifier)
             $0.rowHeight = 80
             $0.delegate = self
             $0.dataSource = self
-            $0.separatorInset = .init(top: 0, left: 90, bottom: 0, right: 0)
+            $0.separatorStyle = .none
         }
     }
     
-    private func setLayout() {
+    override func setLayout() {
         tableView.snp.makeConstraints {
             $0.horizontalEdges.verticalEdges.equalToSuperview()
         }
     }
+    
+    private func setNavigationBar() {
+        self.navigationItem.titleView = navigationTitleLabel
+        self.navigationItem.backButtonTitle = "인기 차트"
+    }
 }
 
 extension ChartViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedApp = appList[indexPath.row]
+        if selectedApp.title == "토스" {
+            let vc = TossViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
 extension ChartViewController: UITableViewDataSource {
