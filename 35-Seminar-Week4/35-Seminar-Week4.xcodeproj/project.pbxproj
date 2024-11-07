@@ -20,7 +20,7 @@
 		AD705EE42CD5F92A00972B86 /* Exceptions for "35-Seminar-Week4" folder in "35-Seminar-Week4" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resource/Info.plist,
 			);
 			target = AD705E902CD5F0EB00972B86 /* 35-Seminar-Week4 */;
 		};
@@ -164,7 +164,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 63K349422G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "35-Seminar-Week4/Info.plist";
+				INFOPLIST_FILE = "35-Seminar-Week4/Resource/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -191,7 +191,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 63K349422G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "35-Seminar-Week4/Info.plist";
+				INFOPLIST_FILE = "35-Seminar-Week4/Resource/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -212,7 +212,7 @@
 		AD705EA72CD5F0EC00972B86 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = AD705EDA2CD5F92A00972B86 /* 35-Seminar-Week4 */;
-			baseConfigurationReferenceRelativePath = Configuration.xcconfig;
+			baseConfigurationReferenceRelativePath = Sources/Application/Configuration.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -277,7 +277,7 @@
 		AD705EA82CD5F0EC00972B86 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = AD705EDA2CD5F92A00972B86 /* 35-Seminar-Week4 */;
-			baseConfigurationReferenceRelativePath = Configuration.xcconfig;
+			baseConfigurationReferenceRelativePath = Sources/Application/Configuration.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
