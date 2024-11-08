@@ -10,7 +10,6 @@ import Security
 
 final class KeyChainManager {
     static let shared = KeyChainManager()
-    
     static let tokenKey = "token"
     
     private func transformData(data: String) -> Data? {
@@ -61,5 +60,15 @@ final class KeyChainManager {
         }
         
         return nil
+    }
+    
+    func delete(key: String) -> Bool {
+        let deleteQuery: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: key
+        ]
+        
+        let status = SecItemDelete(deleteQuery as CFDictionary)
+        return status == errSecSuccess
     }
 }
