@@ -48,4 +48,11 @@ enum APIType {
         default: return true
         }
     }
+    
+    var isResponse: Bool {
+        switch self {
+        case .updateInfo: return false
+        default: return true
+        }
+    }
 }
