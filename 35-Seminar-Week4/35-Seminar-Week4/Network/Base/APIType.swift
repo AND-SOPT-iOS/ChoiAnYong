@@ -34,4 +34,18 @@ enum APIType {
         case .updateInfo: return .put
         }
     }
+    
+    var isHeader: Bool {
+        switch self {
+        case .hobby, .otherHobby, .updateInfo: return true
+        default: return false
+        }
+    }
+    
+    var isRequestBody: Bool {
+        switch self {
+        case .hobby, .otherHobby: return false
+        default: return true
+        }
+    }
 }
