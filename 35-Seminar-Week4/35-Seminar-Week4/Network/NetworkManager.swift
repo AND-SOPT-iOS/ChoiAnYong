@@ -25,13 +25,10 @@ class NetworkManager {
         apiType: APIType,
         completion: @escaping (Result<R, NetworkError>) -> Void
     ) {
-                
         let url = Environment.baseURL + apiType.path
-        
         let parameters = apiType.isRequestBody ? request : nil
-        
         let interceptor: RequestInterceptor? = apiType.isHeader ? AuthInterceptor.shared : nil
-
+        
         session.request(
             url,
             method: apiType.mehtod,
@@ -42,7 +39,6 @@ class NetworkManager {
         .validate()
         .response { [weak self] response in
             guard let statusCode = response.response?.statusCode,
-                  let data = response.data,
                   let self
             else {
                 completion(.failure(.unknownError))
@@ -51,11 +47,20 @@ class NetworkManager {
             
             switch response.result {
             case .success:
-                guard let decodedResponse = try? JSONDecoder().decode(R.self, from: data) else {
-                    return completion(.failure(.decodingError))
+                if apiType.isResponse {
+                    guard let data = response.data,
+                          let decodedResponse = try? JSONDecoder().decode(R.self, from: data) else {
+                        return completion(.failure(.decodingError))
+                    }
+                    completion(.success(decodedResponse))
+                } else {
+                    completion(.success(EmptyResponse() as! R))
                 }
-                completion(.success(decodedResponse))
+                
             case .failure:
+                guard let data = response.data else {
+                    return completion(.failure(.unknownError))
+                }
                 let error = self.handleStatusCode(statusCode, data: data)
                 completion(.failure(error))
             }
@@ -74,6 +79,8 @@ class NetworkManager {
             return .expressionError
         case (404, ""):
             return .invalidURL
+        case (404, "01"):
+            return .noNumber
         case (409, "00"):
             return .duplicateError
         case (500, ""):
