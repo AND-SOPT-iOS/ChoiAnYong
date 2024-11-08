@@ -12,23 +12,32 @@ import Alamofire
 class NetworkManager {
     static let shared = NetworkManager()
     
+    private let session: Session
+    
+    init() {
+        let eventLogger = NetworkEventLogger()
+        session = Session(eventMonitors: [eventLogger])
+    }
+    
     func request<T: Codable, R: Codable>(
         request: T,
         response: R.Type,
         apiType: APIType,
         completion: @escaping (Result<R, NetworkError>) -> Void
     ) {
-        
-        /// baseURL + /user = http://211.188.53.75:8080/user
+                
         let url = Environment.baseURL + apiType.path
         
-        let parameters = request
+        let parameters = apiType.isRequestBody ? request : nil
         
-        AF.request(
+        let interceptor: RequestInterceptor? = apiType.isHeader ? AuthInterceptor.shared : nil
+
+        session.request(
             url,
             method: apiType.mehtod,
             parameters: parameters,
-            encoder: JSONParameterEncoder.default
+            encoder: JSONParameterEncoder.default,
+            interceptor: interceptor
         )
         .validate()
         .response { [weak self] response in
@@ -39,13 +48,12 @@ class NetworkManager {
                 completion(.failure(.unknownError))
                 return
             }
-                        
-            guard let decodedResponse = try? JSONDecoder().decode(R.self, from: data) else {
-                return completion(.failure(.decodingError))
-            }
             
             switch response.result {
             case .success:
+                guard let decodedResponse = try? JSONDecoder().decode(R.self, from: data) else {
+                    return completion(.failure(.decodingError))
+                }
                 completion(.success(decodedResponse))
             case .failure:
                 let error = self.handleStatusCode(statusCode, data: data)
