@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 class MainTabBarController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,8 +33,6 @@ class MainTabBarController: UITabBarController {
             $0.tabBarItem.title = "정보 수정"
             $0.tabBarItem.image = UIImage(systemName: "pencil")
         }
-        
-        
         
         tabBar.unselectedItemTintColor = .systemGray3
         tabBar.tintColor = .systemBlue

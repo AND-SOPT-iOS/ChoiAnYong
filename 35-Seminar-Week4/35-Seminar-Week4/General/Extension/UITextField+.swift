@@ -17,6 +17,7 @@ extension UITextField {
                 height: self.frame.height
             )
         )
+        
         leftView = paddingView
         leftViewMode = .always
     }
