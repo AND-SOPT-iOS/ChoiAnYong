@@ -86,10 +86,6 @@ class SignupViewController: BaseViewController {
             $0.backgroundColor = .black
             $0.layer.cornerRadius = 18
             $0.isEnabled = true
-            $0.configuration?.showsActivityIndicator = true
-            var confiure = UIButton.Configuration.plain()
-            confiure.showsActivityIndicator = false
-            $0.configuration = confiure
             $0.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         }
         
@@ -180,7 +176,6 @@ class SignupViewController: BaseViewController {
 
 extension SignupViewController {
     @objc func loginButtonTapped() {
-        signupButton.configuration?.showsActivityIndicator = true
         let request = SignupRequest(
             username: idTextField.text!,
             password: passwordTextField.text!,
@@ -201,11 +196,9 @@ extension SignupViewController {
                         value.result.no,
                         forKey: "UserNumber"
                     )
-                    self.signupButton.configuration?.showsActivityIndicator = false
                     navigationController?.popViewController(animated: true)
                 case .failure(let error):
                     self.messageLabel.text = error.errorMessage
-                    self.signupButton.configuration?.showsActivityIndicator = false
                 }
             }
         }
