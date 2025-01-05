@@ -14,9 +14,22 @@
 		AD59E00A2D2A3D130095A463 /* BoxOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AD59E01F2D2A4A070095A463 /* Exceptions for "BoxOffice" folder in "BoxOffice" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Info.plist,
+			);
+			target = AD59E0092D2A3D130095A463 /* BoxOffice */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		AD59E00C2D2A3D130095A463 /* BoxOffice */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AD59E01F2D2A4A070095A463 /* Exceptions for "BoxOffice" folder in "BoxOffice" target */,
+			);
 			path = BoxOffice;
 			sourceTree = "<group>";
 		};
@@ -136,6 +149,8 @@
 /* Begin XCBuildConfiguration section */
 		AD59E0162D2A3D150095A463 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = AD59E00C2D2A3D130095A463 /* BoxOffice */;
+			baseConfigurationReferenceRelativePath = Resources/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -199,6 +214,8 @@
 		};
 		AD59E0172D2A3D150095A463 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = AD59E00C2D2A3D130095A463 /* BoxOffice */;
+			baseConfigurationReferenceRelativePath = Resources/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -264,6 +281,7 @@
 				DEVELOPMENT_TEAM = 63K349422G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BoxOffice/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -293,6 +311,7 @@
 				DEVELOPMENT_TEAM = 63K349422G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BoxOffice/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
