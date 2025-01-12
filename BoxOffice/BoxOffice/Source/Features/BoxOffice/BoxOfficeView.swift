@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct BoxOfficeView: View {
-    @StateObject var viewModel: BoxOfficeViewModel
+    @StateObject var store: BoxOfficeStore
+    @EnvironmentObject private var navigationStore: NavigationStore
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationStore.path) {
             ScrollView(showsIndicators: false) {
-                TitleView(viewModel: viewModel)
-                BoxOfficeListView(viewModel: viewModel)
+                TitleView(store: store)
+                BoxOfficeListView(store: store)
             }
-            .navigationDestination(item: $viewModel.movie) { movie in
-                MovieDetailView(movie: movie)
+            .navigationDestination(for: ViewType.self) { view in
+                navigationStore.bulid(view)
+                    .environmentObject(store)
             }
+        }
+        .onAppear {
+            store.dispatch(.onAppear)
         }
     }
 }
@@ -26,10 +31,10 @@ struct BoxOfficeView: View {
 //MARK: - TitleView
 
 private struct TitleView: View {
-    @ObservedObject private var viewModel: BoxOfficeViewModel
+    @ObservedObject private var store: BoxOfficeStore
     
-    fileprivate init(viewModel: BoxOfficeViewModel) {
-        self.viewModel = viewModel
+    fileprivate init(store: BoxOfficeStore) {
+        self.store = store
     }
     
     fileprivate var body: some View {
@@ -40,17 +45,17 @@ private struct TitleView: View {
             
             HStack {
                 Button {
-                    viewModel.calulateDate(-1)
+                    store.dispatch(.changeDate(plus: -1))
                 } label: {
                     Image(systemName: "control")
                         .rotationEffect(Angle(degrees: -90))
                 }
                 
-                Text("\(viewModel.date)")
+                Text("\(store.state.date)")
                     .font(.headline)
                 
                 Button {
-                    viewModel.calulateDate(1)
+                    store.dispatch(.changeDate(plus: 1))
                 } label: {
                     Image(systemName: "control")
                         .rotationEffect(Angle(degrees: 90))
@@ -64,25 +69,24 @@ private struct TitleView: View {
 //MARK: - BoxOfficeListView
 
 private struct BoxOfficeListView: View {
-    @ObservedObject private var viewModel: BoxOfficeViewModel
+    @ObservedObject private var store: BoxOfficeStore
+    @EnvironmentObject private var navigationStore: NavigationStore
     
-    fileprivate init(viewModel: BoxOfficeViewModel) {
-        self.viewModel = viewModel
+    fileprivate init(store: BoxOfficeStore) {
+        self.store = store
     }
     
     fileprivate var body: some View {
         Group {
-            if viewModel.boxOffice.isEmpty {
+            if store.state.boxOffice.isEmpty {
                 Text("집계되지 않은 날짜입니다!")
                     .font(.headline)
                     .padding(.top, 300)
             } else {
-                ForEach(viewModel.boxOffice, id: \.self) { boxOffice in
+                ForEach(store.state.boxOffice, id: \.self) { boxOffice in
                     BoxOfficeCell(boxOffice: boxOffice)
                         .onTapGesture {
-                            Task {
-                                try await viewModel.fetchMovieInfo(boxOffice.movieCd)
-                            }
+                            navigationStore.dispatch(.push(.movieDetail(boxOffice.movieCd)))
                         }
                 }
             }
@@ -131,5 +135,5 @@ private struct BoxOfficeCell:View {
 }
 
 #Preview {
-    BoxOfficeView(viewModel: BoxOfficeViewModel())
+    BoxOfficeView(store: BoxOfficeStore())
 }
