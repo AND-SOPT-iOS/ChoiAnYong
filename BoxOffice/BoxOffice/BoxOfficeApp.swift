@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct BoxOfficeApp: App {
+    @StateObject private var navigationStore = NavigationStore()
+    
     var body: some Scene {
         WindowGroup {
-            BoxOfficeView(viewModel: BoxOfficeViewModel())
+            BoxOfficeView(store: BoxOfficeStore())
+                .environmentObject(navigationStore)
         }
     }
 }

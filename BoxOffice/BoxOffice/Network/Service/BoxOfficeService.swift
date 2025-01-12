@@ -9,8 +9,12 @@ import Foundation
 
 import Moya
 
-final class BoxOfficeService {
-    static let shared = BoxOfficeService()
+protocol BoxOfficeServiceProtocol {
+    func fetchBoxOffice(date: String) async throws -> BoxOfficeResponse
+    func fetchMovieDetail(movieId: String) async throws -> MovieResponse
+}
+
+final class BoxOfficeService: BoxOfficeServiceProtocol {
     
     private let provider = MoyaProvider<BoxOfficeAPI>(plugins: [MoyaLoggingPlugin()])
     
